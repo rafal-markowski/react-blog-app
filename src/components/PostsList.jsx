@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { PostsListBtn } from './all-components';
 import mapStateToProps from '../tools/mapStateToProps';
 import mapDispatchToProps from '../tools/mapDispatchToProps';
 
@@ -27,8 +28,8 @@ class PostsList extends Component {
             start
         }
     }
-    
-    componentDidMount() {
+
+    createPostsList() {
         const { numberOfPages, start } = this.state;
         const { getPostsList, limit } = this.props;
         const number = this.props.match.params.id;
@@ -41,21 +42,34 @@ class PostsList extends Component {
             getPostsList(start[number - 1], limit);
         }
     }
+    
+    componentDidMount() {
+        this.createPostsList();
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.match.params.id !== this.props.match.params.id) {
+            this.createPostsList();
+        }
+    }
 
     render() {
         const { list, loading } = this.props.postsList;
+        const { numberOfPages } = this.state;
+        
         const listItems = list.map(el => <div key={el.id}>
-            <p>{el.id}</p>
+            <h2>{el.title}</h2>
+            <p>{el.body}</p>
             <br/>
             <br/>
         </div>);
 
-        return (
+        return !loading ? (
             <>
-                {loading && <span>Loading...</span>}
                 {listItems}
+                <PostsListBtn numberOfPages={numberOfPages} />
             </>
-        );
+        ) : null;
     }
 }
 

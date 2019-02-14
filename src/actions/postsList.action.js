@@ -18,7 +18,7 @@ export const errorPostsList = () => ({
 });
 
 export const asyncFetchPostsList = (start, limit) => async dispatch => {
-    dispatch(errorPostsList());
+    dispatch(loadingPostsList());
 
     const data = await getPostsList(start, limit);
 
