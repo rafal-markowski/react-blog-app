@@ -6,7 +6,7 @@ class PostsListBtn extends Component {
         page: parseInt(this.props.match.params.id, 10)
     }
 
-    changeList = id => {
+    changeList(id) {
         const { numberOfPages} = this.props;
 
         if(id >= 1 && id <= numberOfPages) {
@@ -18,9 +18,26 @@ class PostsListBtn extends Component {
         }
     }
 
+    scrollToTop() {
+        window.scrollTo({
+            top: this.props.parent.current.offsetTop
+        });
+    }
+
+    onClick = (e, id) => {
+        const { loading } = this.props;
+       
+        e.preventDefault();
+
+        if(!loading) {
+            this.changeList(id);
+            this.scrollToTop();
+        }
+    }
+
     createButton(attr, name, _if, _else) {
         return _if ? {
-                btn: <button key={attr} onClick={() => this.changeList(attr)}>{name}</button>,
+                btn: <button key={attr} onClick={(e) => this.onClick(e, attr)}>{name}</button>,
                 bool: true
             } : _else ? {
                 btn: <button key={attr}>...</button>,
@@ -31,7 +48,7 @@ class PostsListBtn extends Component {
     render() {
         const { numberOfPages } = this.props;
         const { page } = this.state;
-        const btns = [<button key="prev" onClick={() => this.changeList(page - 1)}>Prev</button>];
+        const btns = [<button key="prev" onClick={(e) => this.onClick(e, page - 1)}>Prev</button>];
 
         for(let i = 1, obj = {}; i <= numberOfPages; i++) {
             obj = 
@@ -41,7 +58,7 @@ class PostsListBtn extends Component {
                                                            this.createButton(i, i, (i === 1 || i === numberOfPages || (i >= page - 1 && i <= page + 1)), obj.bool);
             btns.push(obj.btn);
         }
-        btns.push(<button key="next" onClick={() => this.changeList(page + 1)}>Next</button>);
+        btns.push(<button key="next" onClick={(e) => this.onClick(e, page + 1)}>Next</button>);
 
         return (
             <div>

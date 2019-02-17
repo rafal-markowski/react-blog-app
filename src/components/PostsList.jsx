@@ -27,6 +27,8 @@ class PostsList extends Component {
             numberOfPosts,
             start
         }
+
+        this.ref = React.createRef();
     }
 
     createPostsList() {
@@ -64,12 +66,12 @@ class PostsList extends Component {
             <br/>
         </div>);
 
-        return !loading ? (
-            <>
+        return (
+            <div ref={this.ref}>
                 {listItems}
-                <PostsListBtn numberOfPages={numberOfPages} />
-            </>
-        ) : null;
+                <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} loading={loading}/>
+            </div>
+        );
     }
 }
 
