@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { PostsListBtn } from './all-components';
+import { BigImg, ImgWrapper, ImgTitle, A, P, ArticleWrapper } from '../styles/all-styles';
 import mapStateToProps from '../tools/mapStateToProps';
 import mapDispatchToProps from '../tools/mapDispatchToProps';
+
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0.8rem;
+    margin-bottom: 2rem;
+    
+    @media (min-width: ${({ theme }) => theme.breakpoint.sm}) {
+        grid-gap: 2rem 3rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
+        grid-template-columns: minmax(min-content, 400px) minmax(min-content, 400px);
+    }
+`;
+
+const Body = styled(P)`
+    padding: 0 0.625rem;
+`;
 
 class PostsList extends Component {
     static defaultProps = {
@@ -59,19 +80,24 @@ class PostsList extends Component {
         const { list, loading } = this.props.postsList;
         const { numberOfPages } = this.state;
         
-        const listItems = list.map(el => <div key={el.id}>
-            <h2>{el.title}</h2>
-            <p>{el.body}</p>
-            <br/>
-            <br/>
-        </div>);
+        const listItems = list.map(el => <article key={el.id}>
+            <A to={`../news/${el.id}`}>
+                <ImgWrapper as="header">
+                    <BigImg src={`https://picsum.photos/580/225?image=${el.id * 2}`} alt="" />
+                    <ImgTitle>{el.title}</ImgTitle>
+                </ImgWrapper>
+            </A>
+            <Body>{el.body}</Body>
+        </article>);
 
-        return (
-            <div ref={this.ref}>
-                {listItems}
+        return !loading ? (
+            <ArticleWrapper>
+                <Grid ref={this.ref}>
+                    {listItems}
+                </Grid>
                 <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} loading={loading}/>
-            </div>
-        );
+            </ArticleWrapper>
+        ) : null;
     }
 }
 
