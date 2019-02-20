@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 const ImgTitle = styled.h2`
     position: absolute;
-    left: 10px;
-    bottom: 10px;
+    right: 0.4166em;
+    left: 0.4166em;
+    bottom: 0.4166em;
     z-index: 2;
     font-weight: ${({ theme }) => theme.fontWeight.bold };
     font-size: 1.5em;

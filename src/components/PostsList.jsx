@@ -10,15 +10,15 @@ import mapDispatchToProps from '../tools/mapDispatchToProps';
 const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 0.8rem;
+    grid-gap: 1rem;
     margin-bottom: 2rem;
     
     @media (min-width: ${({ theme }) => theme.breakpoint.sm}) {
-        grid-gap: 2rem 3rem;
+        grid-gap: 2rem;
     }
 
     @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
-        grid-template-columns: minmax(min-content, 400px) minmax(min-content, 400px);
+        grid-template-columns: repeat(2, minmax(min-content, 400px));
     }
 `;
 
@@ -30,60 +30,67 @@ class PostsList extends Component {
     static defaultProps = {
         limit: 10
     };
+    
+    state = {
+        list: [],
+        numberOfPages: 0,
+        numberOfPosts: 0,
+        start: 0
+    }
 
     constructor(props) {
         super(props);
 
-        const limit = this.props.limit;
-        const numberOfPosts = 100;
-        const numberOfPages = numberOfPosts / limit;
-        const start = [];
-        
-        for(let i = 0; i <= numberOfPosts - limit; i += limit) {
-            start.push(i);
-        }
-
-        this.state = {
-            numberOfPages,
-            numberOfPosts,
-            start
-        }
-
         this.ref = React.createRef();
     }
 
-    createPostsList() {
-        const { numberOfPages, start } = this.state;
-        const { getPostsList, limit } = this.props;
-        const number = this.props.match.params.id;
+    changeList() {
+        const { limit, match } = this.props;
+        const { list } = this.props.postsList;
 
-        if(number > numberOfPages) {
-            getPostsList(start[start.length - 1], limit);
-        } else if(number < 1) {
-            getPostsList(0, limit);
-        } else {
-            getPostsList(start[number - 1], limit);
-        }
+        const start = (match.params.id - 1) * limit;
+        
+        return list.slice(start, start + limit);
     }
-    
-    componentDidMount() {
-        this.createPostsList();
+
+    async componentDidMount() {
+        await this.props.getPostsList();
+
+        const { list } = this.props.postsList;
+        const { limit, match, history } = this.props;
+        
+        const numberOfPosts = list.length;
+        const numberOfPages = parseInt(numberOfPosts / limit);
+
+        if(match.params.id < 1) {
+            history.push('/page/1');
+        } else if(match.params.id > numberOfPages) {
+            history.push(`/page/${numberOfPages}`);
+        }
+
+        this.setState({ 
+            list: this.changeList(),
+            numberOfPages,
+            numberOfPosts
+        });
     }
 
     componentDidUpdate(prevProps) {
         if(prevProps.match.params.id !== this.props.match.params.id) {
-            this.createPostsList();
+            this.setState({
+                list: this.changeList()
+            });
         }
     }
 
     render() {
-        const { list, loading } = this.props.postsList;
-        const { numberOfPages } = this.state;
+        const { loading } = this.props.postsList;
+        const { list, numberOfPages } = this.state;
         
         const listItems = list.map(el => <article key={el.id}>
             <A to={`../news/${el.id}`}>
                 <ImgWrapper as="header">
-                    <BigImg src={`https://picsum.photos/580/225?image=${el.id * 2}`} alt="" />
+                    <BigImg img={`https://loremflickr.com/680/225/paris?random=${el.id}`} />
                     <ImgTitle>{el.title}</ImgTitle>
                 </ImgWrapper>
             </A>
@@ -91,11 +98,11 @@ class PostsList extends Component {
         </article>);
 
         return !loading ? (
-            <ArticleWrapper>
-                <Grid ref={this.ref}>
+            <ArticleWrapper ref={this.ref}>
+                <Grid>
                     {listItems}
                 </Grid>
-                <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} loading={loading}/>
+                <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} />
             </ArticleWrapper>
         ) : null;
     }

@@ -1,13 +1,12 @@
 const theme = {
     color: {
-        white: '#ffffff',
+        white: '#ffffff'
     },
     bg: {
         primary: '#191e2c',
         secondary: '#212838',
-        img: 'rgba(0, 0, 0, 0.25)',
-        imgHover: 'rgba(0, 0, 0, 0.4)',
-        button: '#c25152'
+        button: '#c25152',
+        black: '#000000'
     },
     fontWeight: {
         light: 300,

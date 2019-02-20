@@ -1,21 +1,28 @@
 import styled from 'styled-components';
 
+import { BigImg } from './all-styles';
+
 const ImgWrapper = styled.div`
     position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
 
-    &:after {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+    @media (min-width: ${({ theme }) => theme.breakpoint.sm }) {
+        height: 200px;
         border-radius: ${({ theme }) => theme.border.radius };
-        background-color: ${({ theme }) => theme.bg.img };
-        content: '';
     }
 
-    &:hover:after {
-        background-color: ${({ theme }) => theme.bg.imgHover };
+    @media (min-width: ${({ theme }) => theme.breakpoint.md }) {
+        height: 225px;
+    }
+
+    &:hover > ${BigImg} {
+        transform: scale(1.3);
+
+        &::after {
+            opacity: 0.6;
+        }
     }
 `;
 

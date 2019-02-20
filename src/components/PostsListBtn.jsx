@@ -31,42 +31,33 @@ class PostsListBtn extends Component {
         page: parseInt(this.props.match.params.id, 10)
     }
 
-    changeList(id) {
-        const { numberOfPages} = this.props;
-
-        this.setState(() => {
-            const newPage = id >= 1 && id <= 10 ? id : id < 1 ? 1 : numberOfPages;
-
-            return {
-                page: newPage
-            };
-        }, () => {
-            const { page } = this.state;
-
-            this.props.history.push(`/page/${page}`);
-        });
+    componentDidUpdate(prevProps) {
+        if(prevProps.match.params.id !== this.props.match.params.id) {
+            this.setState({
+                page: parseInt(this.props.match.params.id, 10)
+            });
+        }
     }
 
-    scrollToTop() {
-        window.scrollTo({
-            top: this.props.parent.current.offsetTop
-        });
-    }
+    onClick = id => {
+        const { numberOfPages, history } = this.props;
+        const { page } = this.state;
 
-    onClick = (e, id) => {
-        const { loading } = this.props;
-       
-        e.preventDefault();
 
-        if(!loading) {
-            this.changeList(id);
-            this.scrollToTop();
+        if(id >= 1 && id <= numberOfPages && page !== id) {
+            this.setState({
+                page: id
+            });
+            history.push(`/page/${id}`);
+            window.scrollTo({
+                top: this.props.parent.current.offsetTop
+            });
         }
     }
 
     createButton(page, val, _if, _else) {
         return _if ? {
-            btn: <DesktopBtn key={val} isActive={page === val ? true : false} onClick={(e) => this.onClick(e, val)}>{val}</DesktopBtn>,
+            btn: <DesktopBtn key={val} isActive={page === val ? true : false} onClick={() => this.onClick(val)}>{val}</DesktopBtn>,
             bool: true
         } : _else ? {
             btn: <DesktopBtn key={val}>...</DesktopBtn>,
@@ -77,7 +68,7 @@ class PostsListBtn extends Component {
     render() {
         const { numberOfPages } = this.props;
         const { page } = this.state;
-        const btns = [<Btn key="prev" onClick={(e) => this.onClick(e, page - 1)}>Prev</Btn>];
+        const btns = [<Btn key="prev" onClick={() => this.onClick(page - 1)}>Prev</Btn>];
 
         for(let i = 1, obj = {}; i <= numberOfPages; i++) {
             obj = 
@@ -87,10 +78,10 @@ class PostsListBtn extends Component {
                                                            this.createButton(page, i, (i === 1 || i === numberOfPages || (i >= page - 1 && i <= page + 1)), obj.bool);
             btns.push(obj.btn);
         }
-        btns.push(<Btn key="next" onClick={(e) => this.onClick(e, page + 1)}>Next</Btn>);
+        btns.push(<Btn key="next" onClick={() => this.onClick(page + 1)}>Next</Btn>);
 
         return (
-            <Center x="true" y="true">
+            <Center>
                 {btns}
             </Center>
         );

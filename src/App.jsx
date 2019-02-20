@@ -9,7 +9,7 @@ class App extends Component {
         return (
             <ContainerFluid as="main">
                 <BgWrapper>
-                    <Center x="true" y="true">
+                    <Center>
                         <Switch>
                             <Route exact path="/page/:id" component={PostsList} />
                             <Redirect to="/page/1" />

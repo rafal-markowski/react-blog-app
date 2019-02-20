@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 const ContainerFluid = styled.div`
-    @media (min-width: ${({ theme }) => theme.breakpoint.sm}) {
+    @media (min-width: ${({ theme }) => theme.breakpoint.sm }) {
         margin: 0 1rem;
     }
 
-    @media (min-width: ${({ theme }) => theme.breakpoint.lg}) {
+    @media (min-width: ${({ theme }) => theme.breakpoint.lg }) {
         margin: 0 2rem;
     }
 `;
