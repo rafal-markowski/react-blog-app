@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { PostsListBtn } from './all-components';
-import { BigImg, ImgWrapper, ImgTitle, A, P, ArticleWrapper } from '../styles/all-styles';
+import { PostsListBtn, Loading } from './all-components';
+import { BigImg, ImgWrapper, ImgTitle, A, P } from '../styles/all-styles';
 import mapStateToProps from '../tools/mapStateToProps';
 import mapDispatchToProps from '../tools/mapDispatchToProps';
 
@@ -11,19 +11,30 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     
-    @media (min-width: ${({ theme }) => theme.breakpoint.sm}) {
-        grid-gap: 2rem;
+    @media (min-width: ${({ theme }) => theme.breakpoint.sm }) {
+        grid-gap: 3rem 2rem;
     }
 
-    @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
-        grid-template-columns: repeat(2, minmax(min-content, 400px));
+    @media (min-width: ${({ theme }) => theme.breakpoint.md }) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: ${({ theme }) => theme.breakpoint.lg }) {
+        grid-template-columns: repeat(2, minmax(min-content, 330px));
+    }
+    
+    @media (min-width: ${({ theme }) => theme.breakpoint.xl }) {
+        grid-template-columns: repeat(2, minmax(min-content, 370px));
+        grid-gap: 3rem;
     }
 `;
 
 const Body = styled(P)`
-    padding: 0 0.625rem;
+    @media (max-width: ${({ theme }) => theme.breakpoint.sm }) {
+        padding: 0 0.625rem;
+    }
 `;
 
 class PostsList extends Component {
@@ -98,13 +109,13 @@ class PostsList extends Component {
         </article>);
 
         return !loading ? (
-            <ArticleWrapper ref={this.ref}>
-                <Grid>
+            <>
+                <Grid ref={this.ref}>
                     {listItems}
                 </Grid>
                 <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} />
-            </ArticleWrapper>
-        ) : null;
+            </>
+        ) : (<Loading />);
     }
 }
 

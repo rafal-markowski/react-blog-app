@@ -8,7 +8,7 @@ const Center = styled.div`
 `;
 
 Center.defaultProps = {
-    direction: 'rows',
+    direction: 'row',
     x: "true",
     y: "true"
 };

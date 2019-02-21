@@ -13,10 +13,6 @@ const ImgWrapper = styled.div`
         border-radius: ${({ theme }) => theme.border.radius };
     }
 
-    @media (min-width: ${({ theme }) => theme.breakpoint.md }) {
-        height: 225px;
-    }
-
     &:hover > ${BigImg} {
         transform: scale(1.3);
 

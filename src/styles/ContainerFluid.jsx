@@ -1,13 +1,9 @@
 import styled from 'styled-components';
 
 const ContainerFluid = styled.div`
-    @media (min-width: ${({ theme }) => theme.breakpoint.sm }) {
-        margin: 0 1rem;
-    }
-
-    @media (min-width: ${({ theme }) => theme.breakpoint.lg }) {
-        margin: 0 2rem;
-    }
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
 `;
 
 export default ContainerFluid;

@@ -5,6 +5,7 @@ const theme = {
     bg: {
         primary: '#191e2c',
         secondary: '#212838',
+        box: '#31394d',
         button: '#c25152',
         black: '#000000'
     },
@@ -19,7 +20,8 @@ const theme = {
     },
     border: {
         radius: '7px',
-        button: '1px solid #c25152'
+        button: '1px solid #c25152',
+        color: '#52596a'
     },
     breakpoint: {
         sm: '576px',
