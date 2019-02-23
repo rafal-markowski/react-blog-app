@@ -65,13 +65,13 @@ class Newsletter extends Component {
                 <H3>Newsletter</H3>
                 <form onSubmit={this.submitForm} noValidate={true}>
                     <FormRow>
-                        <Input value={value} onChange={this.setValue} error={error ? true : false} type="email" placeholder="Email" />
-                        { error && <ErrorMsg>{errorMsg}</ErrorMsg> }
+                        <Input value={value} onChange={this.setValue}type="email" placeholder="Email" />
+                        { error && errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg> }
                     </FormRow>
                     <FormRow>
-                        <SubmitButton>Submit</SubmitButton>
-                        { !error && <SuccessMsg>{successMsg}</SuccessMsg> }
+                        <SubmitButton>Zapisz się</SubmitButton>
                     </FormRow>
+                    { !error && successMsg && <SuccessMsg>{successMsg}</SuccessMsg> }
                 </form>
             </Box>
         );

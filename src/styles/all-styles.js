@@ -13,5 +13,7 @@ import SuccessMsg from './SuccessMsg';
 import ErrorMsg from './ErrorMsg';
 import H3 from './H3';
 import FormRow from './FormRow';
+import Small from './Small';
+import Label from './Label';
 
-export { ContainerFluid, A, BigImg, ImgWrapper, ImgTitle, P, Center, Button, Box, Input, SubmitButton, SuccessMsg, ErrorMsg, H3, FormRow };
+export { ContainerFluid, A, BigImg, ImgWrapper, ImgTitle, P, Center, Button, Box, Input, SubmitButton, SuccessMsg, ErrorMsg, H3, FormRow, Small, Label };
