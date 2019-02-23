@@ -9,9 +9,7 @@ const Btn = styled(Button)`
     margin-right: 5px;
     border: ${({ theme }) => theme.border.button };
     border-radius: ${({ theme }) => theme.border.radius }
-    font-weight: ${({ theme }) => theme.fontWeight.bold };
     background-color: transparent;
-    color: white;
 
     &:hover {
         background-color: ${({ theme }) => theme.bg.button };
