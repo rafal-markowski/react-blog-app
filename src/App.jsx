@@ -3,7 +3,12 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ContainerFluid, Center } from './styles/all-styles';
-import { PostsList, Newsletter, Question } from './components/all-components';
+import { PostsList, Newsletter, Question, TopButton } from './components/all-components';
+
+const Scroll = styled.div`
+    overflow-y: scroll;
+    height: 100vh;
+`;
 
 const Column = styled(Center)`
     padding: 1rem 0;
@@ -58,22 +63,27 @@ const Right = styled.aside`
 `;
 
 class App extends Component {
+    scrollRef = React.createRef();
+
     render() {
         return (
-            <ContainerFluid>
-                <Column direction="column" y={null}>
-                    <Left>
-                        <Switch>
-                            <Route exact path="/page/:id" component={PostsList} />
-                            <Redirect to="/page/1" />
-                        </Switch>
-                    </Left>
-                    <Right>
-                        <Newsletter />
-                        <Question />
-                    </Right>
-                </Column>
-            </ContainerFluid>
+            <Scroll ref={this.scrollRef}>
+                <ContainerFluid>
+                    <Column direction="column" y={null}>
+                        <Left>
+                            <Switch>
+                                <Route exact path="/page/:id" component={PostsList} />
+                                <Redirect to="/page/1" />
+                            </Switch>
+                        </Left>
+                        <Right>
+                            <Newsletter />
+                            <Question />
+                        </Right>
+                    </Column>
+                    <TopButton scroll={this.scrollRef} />
+                </ContainerFluid>
+            </Scroll>
         );
     }
 }

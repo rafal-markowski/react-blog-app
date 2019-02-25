@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
         font: 1em / 1.4em ${({ theme}) => theme.fontFamily.primary };
         background-color: ${({ theme }) => theme.bg.primary };
         color: ${({ theme }) => theme.color.white };
+        overflow: hidden;
     }
 `;
 
