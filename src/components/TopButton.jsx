@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
+import mapStateToProps from '../tools/mapStateToProps';
+import mapDispatchToProps from '../tools/mapDispatchToProps';
 import Button from '../styles/Button';
 
 const Btn = styled(Button)`
@@ -44,9 +47,9 @@ class TopButton extends Component {
 
     componentDidMount() {
         setTimeout(() => {
-            this.props.scroll.current.addEventListener('scroll', () => {
-                this.scrolling();
-            });
+            const { global:globalElement } = this.props.scroll.element;
+            
+            globalElement.current.addEventListener('scroll', this.scrolling);
         }, 250);
     }
 
@@ -58,8 +61,10 @@ class TopButton extends Component {
 
     scrollToTop = () => {
         if(this.scrollY >= 0) {
+            const { global:globalElement } = this.props.scroll.element;
+
             this.scrollY -= this.steep;
-            this.props.scroll.current.scrollTo(0, this.scrollY);
+            globalElement.current.scrollTo(0, this.scrollY);
             requestAnimationFrame(this.scrollToTop);
         }
     }
@@ -72,9 +77,12 @@ class TopButton extends Component {
             this.forceUpdate();
         }
 
+
         this.id = setTimeout(() => {
+            const { global:globalElement } = this.props.scroll.element;
+
             this.id = null;
-            this.scrollY = this.props.scroll.current.scrollTop;
+            this.scrollY = globalElement.current.scrollTop;
             this.display = this.scrollY > 0 ? 'block' : 'none';
             this.forceUpdate();
         }, this.time);
@@ -87,4 +95,4 @@ class TopButton extends Component {
     }
 }
 
-export default TopButton;
+export default connect(mapStateToProps, mapDispatchToProps)(TopButton);

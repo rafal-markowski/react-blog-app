@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { Button, Center } from '../styles/all-styles';
+import mapStateToProps from '../tools/mapStateToProps';
+import mapDispatchToProps from '../tools/mapDispatchToProps';
 
 const Btn = styled(Button)`
     padding: 0.6rem 0.65rem;
@@ -40,16 +43,14 @@ class PostsListBtn extends Component {
     onClick = id => {
         const { numberOfPages, history } = this.props;
         const { page } = this.state;
-
+        const { global:globalElement, content:contentElement }  = this.props.scroll.element;
 
         if(id >= 1 && id <= numberOfPages && page !== id) {
             this.setState({
                 page: id
             });
             history.push(`/page/${id}`);
-            window.scrollTo({
-                top: this.props.parent.current.offsetTop
-            });
+            globalElement.current.scrollTo(0, contentElement.current.offsetTop);
         }
     }
 
@@ -67,6 +68,7 @@ class PostsListBtn extends Component {
         const { numberOfPages } = this.props;
         const { page } = this.state;
         const btns = [<Btn key="prev" onClick={() => this.onClick(page - 1)}>Prev</Btn>];
+        
 
         for(let i = 1, obj = {}; i <= numberOfPages; i++) {
             obj = 
@@ -86,4 +88,4 @@ class PostsListBtn extends Component {
     }
 }
 
-export default withRouter(PostsListBtn);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsListBtn));

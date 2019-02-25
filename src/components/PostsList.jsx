@@ -52,7 +52,8 @@ class PostsList extends Component {
     constructor(props) {
         super(props);
 
-        this.ref = React.createRef();
+        this.contentRef = React.createRef();
+        this.props.setScrollElement('content', this.contentRef);
     }
 
     changeList() {
@@ -110,10 +111,10 @@ class PostsList extends Component {
 
         return !loading ? (
             <>
-                <Grid ref={this.ref}>
+                <Grid ref={this.contentRef}>
                     {listItems}
                 </Grid>
-                <PostsListBtn numberOfPages={numberOfPages} parent={this.ref} />
+                <PostsListBtn numberOfPages={numberOfPages} />
             </>
         ) : (<Loading />);
     }

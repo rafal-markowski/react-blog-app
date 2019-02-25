@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { ContainerFluid, Center } from './styles/all-styles';
-import { PostsList, Newsletter, Question, TopButton } from './components/all-components';
+import { PostsList, Newsletter, Question, TopButton, Footer } from './components/all-components';
+import mapStateToProps from './tools/mapStateToProps';
+import mapDispatchToProps from './tools/mapDispatchToProps';
 
 const Scroll = styled.div`
     overflow-y: scroll;
@@ -63,7 +66,12 @@ const Right = styled.aside`
 `;
 
 class App extends Component {
-    scrollRef = React.createRef();
+    constructor(props) {
+        super(props);
+        
+        this.scrollRef = React.createRef();
+        this.props.setScrollElement('global', this.scrollRef);
+    }
 
     render() {
         return (
@@ -82,10 +90,11 @@ class App extends Component {
                         </Right>
                     </Column>
                     <TopButton scroll={this.scrollRef} />
+                    {/* <Footer /> */}
                 </ContainerFluid>
             </Scroll>
         );
     }
 }
 
-export default withRouter(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
