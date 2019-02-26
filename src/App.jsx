@@ -16,7 +16,6 @@ const Scroll = styled.div`
 const Column = styled(Center)`
     padding: 1rem 0;
     background-color: ${({ theme }) => theme.bg.secondary };
-    border-radius: ${({ theme }) => theme.border.radius };
 
     @media (min-width: ${({ theme }) => theme.breakpoint.sm }) {
         padding: 2rem;
@@ -24,6 +23,7 @@ const Column = styled(Center)`
 
     @media (min-width: ${({ theme }) => theme.breakpoint.lg }) {
         flex-direction: row;
+        padding: 3rem 2rem;
     }
 `;
 
@@ -89,9 +89,9 @@ class App extends Component {
                             <Question />
                         </Right>
                     </Column>
-                    <TopButton scroll={this.scrollRef} />
-                    {/* <Footer /> */}
+                    <Footer />
                 </ContainerFluid>
+                <TopButton />
             </Scroll>
         );
     }

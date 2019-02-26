@@ -1,6 +1,7 @@
 const theme = {
     color: {
         white: '#ffffff',
+        linkHover: '#b14041',
         error: '#da0e0e',
         success: '#0ab50a'
     },
