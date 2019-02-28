@@ -6,5 +6,6 @@ import Loading from './Loading';
 import Question from './Question';
 import TopButton from './TopButton';
 import Footer from './Footer';
+import Navbar from './Navbar';
 
-export { PostsList, Layout, PostsListBtn, Newsletter, Loading, Question, TopButton, Footer };
+export { PostsList, Layout, PostsListBtn, Newsletter, Loading, Question, TopButton, Footer, Navbar };

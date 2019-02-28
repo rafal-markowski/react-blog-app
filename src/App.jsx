@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { ContainerFluid, Center } from './styles/all-styles';
-import { PostsList, Newsletter, Question, TopButton, Footer } from './components/all-components';
+import { PostsList, Newsletter, Question, TopButton, Footer, Navbar } from './components/all-components';
 import mapStateToProps from './tools/mapStateToProps';
 import mapDispatchToProps from './tools/mapDispatchToProps';
 
@@ -76,6 +76,7 @@ class App extends Component {
     render() {
         return (
             <Scroll ref={this.scrollRef}>
+                <Navbar />
                 <ContainerFluid>
                     <Column direction="column" y={null}>
                         <Left>
